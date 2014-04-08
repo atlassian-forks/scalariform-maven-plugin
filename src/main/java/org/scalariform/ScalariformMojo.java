@@ -21,6 +21,13 @@ public class ScalariformMojo extends AbstractMojo {
     protected String baseDir;
 
     /**
+     * Source file encoding, e.g. UTF-8. If not set, defaults to the platform default encoding.
+     *
+     * @parameter expression="${encoding}" default-value="${project.build.sourceEncoding}"
+     */
+    protected String encoding;
+
+    /**
      *  @parameter default-value=false
      */
     protected boolean alignParameters;
@@ -122,7 +129,7 @@ public class ScalariformMojo extends AbstractMojo {
 
     public void execute() throws MojoExecutionException {
 
-	MojoFormatter.format(baseDir, this.getLog(),
+	MojoFormatter.format(baseDir, encoding, this.getLog(),
                              alignParameters, 
                              alignSingleLineCaseStatements,
                              alignSingleLineCaseStatements_maxArrowIndent,

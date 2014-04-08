@@ -9,7 +9,7 @@ import java.io.{ File, FilenameFilter, FileFilter }
 
 import scala.collection.JavaConversions._
 
-import scala.io.Source
+import scala.io.{Codec, Source}
 
 import org.apache.maven.plugin.logging.Log
 
@@ -41,6 +41,7 @@ object MojoFormatter {
   }
 
   def format(path: String,
+             sourceEncoding: String,
              log: Log,
              alignParameters: Boolean,
              alignSingleLineCaseStatements: Boolean,
@@ -87,14 +88,16 @@ object MojoFormatter {
 
     val files = findScalaFiles(path)
 
+    val sourceCodec = Option(sourceEncoding).map(Codec.apply)
+
     var count = 0
 
     files.foreach { file ⇒
       try {
-        val original = Source.fromFile(file).mkString
+        val original = Source.fromFile(file)(sourceCodec getOrElse implicitly[Codec]).mkString
         val formatted = ScalaFormatter.format(original, preferences)
         if (original != formatted) {
-          writeText(file, formatted)
+          writeText(file, formatted, sourceCodec map (_.name))
           count += 1
         }
       } catch {
