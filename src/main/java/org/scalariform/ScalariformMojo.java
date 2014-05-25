@@ -2,135 +2,92 @@ package org.scalariform;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
 
 /**
  * Goal which formats scala source files
- *
- * @goal format
- * 
- * @phase process-sources
  */
+@Mojo(name = "format", defaultPhase = LifecyclePhase.PROCESS_SOURCES)
 public class ScalariformMojo extends AbstractMojo {
 
     /**
      * Base directory of the project
-     *
-     * @parameter expression="${basedir}"
-     * @required
      */
+    @Parameter(property = "basedir", required = true)
     protected String baseDir;
 
     /**
      * Source file encoding, e.g. UTF-8. If not set, defaults to the platform default encoding.
-     *
-     * @parameter expression="${encoding}" default-value="${project.build.sourceEncoding}"
      */
+    @Parameter(property = "encoding", defaultValue = "${project.build.sourceEncoding}")
     protected String encoding;
 
-    /**
-     *  @parameter default-value=false
-     */
+    @Parameter(defaultValue = "false")
     protected boolean alignParameters;
 
-    /**
-     *  @parameter default-value=false
-     */
+    @Parameter(defaultValue = "false")
     protected boolean alignSingleLineCaseStatements;
 
-    /**
-     *  @parameter default-value=40
-     */
+    @Parameter(defaultValue = "40")
     protected int alignSingleLineCaseStatements_maxArrowIndent;
 
-    /**
-     *  @parameter default-value=false
-     */
+    @Parameter(defaultValue = "false")
     protected boolean compactControlReadability;
 
-    /**
-     *  @parameter default-value=false
-     */
+    @Parameter(defaultValue = "false")
     protected boolean compactStringConcatenation;
 
-    /**
-     *  @parameter default-value=true
-     */
+    @Parameter(defaultValue = "true")
     protected boolean doubleIndentClassDeclaration;
 
-    /**
-     *  @parameter default-value=true
-     */
+    @Parameter(defaultValue = "true")
     protected boolean formatXml;
 
-    /**
-     *  @parameter default-value=false
-     */
+    @Parameter(defaultValue = "false")
     protected boolean indentLocalDefs;
 
-    /**
-     *  @parameter default-value=true
-     */
+    @Parameter(defaultValue = "true")
     protected boolean indentPackageBlocks;
 
-    /**
-     *  @parameter default-value=2
-     */
+    @Parameter(defaultValue = "2")
     protected int indentSpaces;
 
-    /**
-     *  @parameter default-value=false
-     */
+    @Parameter(defaultValue = "false")
     protected boolean indentWithTabs;
 
-    /**
-     *  @parameter default-value=false
-     */
+    @Parameter(defaultValue = "false")
     protected boolean multilineScaladocCommentsStartOnFirstLine;
 
-    /**
-     *  @parameter default-value=false
-     */
+    @Parameter(defaultValue = "false")
     protected boolean placeScaladocAsterisksBeneathSecondAsterisk;
 
-    /**
-     *  @parameter default-value=false
-     */
+    @Parameter(defaultValue = "false")
     protected boolean preserveDanglingCloseParenthesis;
 
-    /**
-     *  @parameter default-value=false
-     */
+    @Parameter(defaultValue = "false")
     protected boolean preserveSpaceBeforeArguments;
 
-    /**
-     *  @parameter default-value=false
-     */
+    @Parameter(defaultValue = "false")
     protected boolean rewriteArrowSymbols;
 
-    /**
-     *  @parameter default-value=false
-     */
+    @Parameter(defaultValue = "false")
     protected boolean spaceBeforeColon;
 
-    /**
-     *  @parameter default-value=false
-     */
+    @Parameter(defaultValue = "false")
     protected boolean spaceInsideBrackets;
 
-    /**
-     *  @parameter default-value=false
-     */
+    @Parameter(defaultValue = "false")
     protected boolean spaceInsideParentheses;
-    
-    /**
-     *  @parameter default-value=true
-     */
+
+    @Parameter(defaultValue = "true")
     protected boolean spacesWithinPatternBinders;
 
     public void execute() throws MojoExecutionException {
 
 	MojoFormatter.format(baseDir, encoding, this.getLog(),
-                             alignParameters, 
+                             alignParameters,
                              alignSingleLineCaseStatements,
                              alignSingleLineCaseStatements_maxArrowIndent,
                              compactControlReadability,
@@ -151,6 +108,4 @@ public class ScalariformMojo extends AbstractMojo {
                              spaceInsideParentheses,
                              spacesWithinPatternBinders);
     }
-
 }
-
