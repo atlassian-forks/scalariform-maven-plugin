@@ -9,7 +9,7 @@ import org.apache.maven.plugins.annotations.Parameter;
 /**
  * Goal which formats scala source files
  */
-@Mojo(name = "format", defaultPhase = LifecyclePhase.PROCESS_SOURCES)
+@Mojo(name = "format", defaultPhase = LifecyclePhase.PROCESS_SOURCES, threadSafe = true)
 public class ScalariformMojo extends AbstractMojo {
 
     /**
