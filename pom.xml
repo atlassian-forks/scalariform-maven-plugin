@@ -82,10 +82,7 @@
         <executions>
           <execution>
             <id>sign-artifacts</id>
-            <phase>verify</phase>
-            <goals>
-              <goal>sign</goal>
-            </goals>
+            <phase>none</phase>
           </execution>
         </executions>
       </plugin>
